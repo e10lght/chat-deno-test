@@ -29,6 +29,17 @@ router
 
     const kv = await Deno.openKv();
     await kv.set(["test"], data.message);
+  })
+  .get("/api/message", async (context) => {
+    const kv = await Deno.openKv();
+    const data = await kv.get(["test"]);
+    if (data) {
+      context.response.status = 200;
+      context.response.body = { messages: data };
+    } else {
+      context.response.status = 404;
+      context.response.body = { error: "Data not found" };
+    }
   });
 
 const app = new Application();
