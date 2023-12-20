@@ -30,7 +30,7 @@ router
     const kv = await Deno.openKv();
     await kv.set(["test"], data.message);
   })
-  .get("/api/message", async (context) => {
+  .get("/api/message/get", async (context) => {
     const kv = await Deno.openKv();
     const data = await kv.get(["test"]);
     if (data) {
