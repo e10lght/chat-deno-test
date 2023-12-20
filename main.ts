@@ -1,3 +1,4 @@
+/// <reference lib="deno.unstable" />
 import { Application, Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import data from "./data.json" assert { type: "json" };
@@ -21,6 +22,10 @@ router
         context.response.body = "No dinosaurs found.";
       }
     }
+  })
+  .post("/api/create", async (context) => {
+    const kv = await Deno.openKv();
+    await kv.set(["test"], context.request.body);
   });
 
 const app = new Application();
