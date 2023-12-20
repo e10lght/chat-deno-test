@@ -24,8 +24,11 @@ router
     }
   })
   .post("/api/create", async (context) => {
+    const body = await context.request.body();
+    const data = await body.value;
+
     const kv = await Deno.openKv();
-    await kv.set(["test"], context.request.body);
+    await kv.set(["test"], data.message);
   });
 
 const app = new Application();
